@@ -14,16 +14,16 @@ import models.Employee;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class EmployeeShowServlet
+ * Servlet implementation class EmployeesShowServlet
  */
 @WebServlet("/employees/show")
-public class EmployeeShowServlet extends HttpServlet {
+public class EmployeesShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeeShowServlet() {
+    public EmployeesShowServlet() {
         super();
     }
 
