@@ -45,6 +45,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
             //重複チェックを行う指定をする
             Boolean codeDuplicateCheckFlag = true;
             if(e.getCode().equals(request.getParameter("code"))) {
+                codeDuplicateCheckFlag = false;
         } else {
             e.setCode(request.getParameter("code"));
         }
