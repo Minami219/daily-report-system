@@ -45,7 +45,7 @@
                         <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                     </c:when>
                     <c:otherwise>
-                        <p><a href="<c:url value="/reports/goodCount" />">この日報にいいねする</a></p>
+                        <p><a href="<c:url value="/reports/goodCount?id=${report.id}" />">この日報にいいねする</a></p>
                     </c:otherwise>
                 </c:choose>
             </c:when>

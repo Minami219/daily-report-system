@@ -58,8 +58,8 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
 
-
-            r.setGood_count(0);
+            int good_count = 0;
+            r.setGood_count(good_count);
 
 
             List<String>errors = ReportValidator.validate(r);

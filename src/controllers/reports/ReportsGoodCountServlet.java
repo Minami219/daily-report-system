@@ -3,19 +3,19 @@ package controllers.reports;
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Report;
 import utils.DBUtil;
 
 /**
  * Servlet implementation class ReportsGoodCountServlet
  */
-@WebServlet("reports/goodCount")
+@WebServlet("/reports/goodCount")
 public class ReportsGoodCountServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -32,20 +32,22 @@ public class ReportsGoodCountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
-        int good_count = 0;
-        good_count = Integer.parseInt(request.getParameter("good_count"));
-        good_count = good_count++;
+        int good_count = r.getGood_count() + 1;
+
+        r.setGood_count(good_count);
+
 
         em.getTransaction().begin();
         em.getTransaction().commit();
-        request.getSession().setAttribute("flush", "いいねしました");
         em.close();
+        request.getSession().setAttribute("flush", "いいねしました。");
 
 
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
-        rd.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/reports/index");
+
     }
 
 }
