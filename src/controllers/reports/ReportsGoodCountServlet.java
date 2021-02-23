@@ -1,6 +1,7 @@
 package controllers.reports;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
+import models.Good;
 import models.Report;
 import utils.DBUtil;
 
@@ -34,17 +37,23 @@ public class ReportsGoodCountServlet extends HttpServlet {
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
-        int good_count = r.getGood_count() + 1;
 
+        int good_count = r.getGood_count() + 1;
         r.setGood_count(good_count);
 
 
+        Good g = new Good();
+        g.setReport(em.find(Report.class, Integer.parseInt(request.getParameter("id"))));
+        g.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+        g.setCreated_at(new Timestamp(System.currentTimeMillis()));
+        g.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+
+
         em.getTransaction().begin();
+        em.persist(g);
         em.getTransaction().commit();
         em.close();
         request.getSession().setAttribute("flush", "いいねしました。");
-
-
 
         response.sendRedirect(request.getContextPath() + "/reports/index");
 

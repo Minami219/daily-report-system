@@ -35,7 +35,16 @@
                         </tr>
                         <tr>
                             <th>いいね数</th>
-                            <td><c:out value="${report.good_count}" /></td>
+                            <td class="report_good_count">
+                            <c:choose>
+                                <c:when test= "${report.good_count == 0}">
+                                    <c:out value="${report.good_count}" />
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value='/goods/index?id=${report.id}' />">${report.good_count}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                        </tr>
                     </tbody>
                 </table>
@@ -44,8 +53,11 @@
                     <c:when test="${sessionScope.login_employee.id == report.employee.id}">
                         <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                     </c:when>
+                    <c:when test="${goods_count == 0}">
+                         <p><a href="<c:url value="/reports/goodCount?id=${report.id}" />">この日報にいいねする</a></p>
+                    </c:when>
                     <c:otherwise>
-                        <p><a href="<c:url value="/reports/goodCount?id=${report.id}" />">この日報にいいねする</a></p>
+                        <p></p>
                     </c:otherwise>
                 </c:choose>
             </c:when>
